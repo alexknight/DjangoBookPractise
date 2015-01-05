@@ -1,13 +1,9 @@
 from django.conf.urls import patterns, include, url
-from mysite.views import hello,current_datetime,hours_ahead,ua_display,search
+from mysite.views import hello,current_datetime,hours_ahead,ua_display,search,contact
 from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'mysite.views.home', name='home'),
-    # url(r'^blog/', include('blog.urls')),
-
     url(r'^admin/', include(admin.site.urls)),
     url(r'^hello/$',hello),
     url(r'^time/$',current_datetime),
@@ -15,4 +11,5 @@ urlpatterns = patterns('',
     url(r'^display$',ua_display),
     # url(r'^search_form/$',search_form),
     url(r'^search/$',search),
+    url(r'^contact/$',contact),
 )
