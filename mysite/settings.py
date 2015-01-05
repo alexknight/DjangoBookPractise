@@ -84,3 +84,12 @@ STATIC_URL = '/static/'
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates'),
 )
+
+#email config
+EMAIL_USE_TLS=True
+EMAIL_HOST='smtp.163.com'
+EMAIL_HOST_USER='qqliao_shu_feng@163.com'
+EMAIL_HOST_PASSWORD='4234189'
+DEFAULT_FROM_EMAIL='qqliao_shu_feng@163.com'
+SERVER_EMAIL = 'qqliao_shu_feng@163.com'
+
