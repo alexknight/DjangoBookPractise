@@ -5,9 +5,9 @@ class ContactForm(forms.Form):
 	email=forms.EmailField(required=False)
 	message=forms.CharField(widget=forms.Textarea)
 
-	def clean_message(self):
-		message=self.cleaned_data['message']
-		num_words=len(message.split())
-		if num_words<10:
-			raise forms.ValidationError('Not enough words!')
-		return message
+	# def clean_message(self):
+	# 	message=self.cleaned_data['message']
+	# 	num_words=len(message.split())
+	# 	if num_words<3:
+	# 		raise forms.ValidationError('Not enough words!')
+	# 	return message

@@ -5,6 +5,7 @@ from django.shortcuts import render_to_response
 from django.core.mail import send_mail
 from django.http import HttpResponseRedirect
 # from django.views.decorators.csrf import csrf_exempt
+from django.template import RequestContext 
 from mysite.forms import ContactForm
 from blog.models import Book
 import datetime
@@ -77,7 +78,7 @@ def search(request):
 def contact(request):
 	if request.method=='POST':
 		form=ContactForm(request.POST)
-		if forms.is_valid():
+		if form.is_valid():
 			cd=form.cleaned_data
 			send_mail(
 				cd['subject'],
@@ -87,8 +88,8 @@ def contact(request):
 				)
 			return HttpResponseRedirect('/contact/thanks/')
 	else:
-		form=ContactForm(initial={'subject':'I love your site!','message':'hello','email':'619692290@qq.com'})
-	return render_to_response('contact_form.html',{'form':form})
+		form=ContactForm(initial={'subject':'I love your site!','message':'hello world','email':'619692290@qq.com'})
+	return render_to_response('contact_form.html',{'form':form},context_instance=RequestContext(request))
 
 
 
