@@ -1,5 +1,5 @@
 """
-Django settings for mysite project.
+Django settings for simblog project.
 
 For more information on this file, see
 https://docs.djangoproject.com/en/1.6/topics/settings/
@@ -17,7 +17,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '9mr_mqy)&91mdw&ibfn)ovn1k_=sqyfn^_=8q-b(u4d0zj_maj'
+SECRET_KEY = 'rdu$t3!)htvr@z8x!l$0pkg78rfbxnrht%wxw1te6avxrao263'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -36,6 +36,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'DjangoUeditor',
     'blog',
 )
 
@@ -48,9 +49,9 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'mysite.urls'
+ROOT_URLCONF = 'simblog.urls'
 
-WSGI_APPLICATION = 'mysite.wsgi.application'
+WSGI_APPLICATION = 'simblog.wsgi.application'
 
 
 # Database
@@ -66,9 +67,9 @@ DATABASES = {
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-cn'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
@@ -81,16 +82,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
-TEMPLATE_DIRS = (
+
+TEMPLATE_DIRS=(
     os.path.join(BASE_DIR, 'templates'),
-)
-
-#email config
-EMAIL_USE_TLS=True
-EMAIL_HOST='smtp.163.com'
-EMAIL_PORT= 25
-EMAIL_HOST_USER='qqliao_shu_feng@163.com'
-EMAIL_HOST_PASSWORD='4234189'
-DEFAULT_FROM_EMAIL='qqliao_shu_feng@163.com'
-SERVER_EMAIL = 'qqliao_shu_feng@163.com'
-
+    )

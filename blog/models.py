@@ -1,27 +1,33 @@
+#-*-coding=utf-8-*-
 from django.db import models
+import time
+from DjangoUeditor.models import UEditorField
 
-# Create your models here.
-class Publisher(models.Model):
-	name=models.CharField(max_length=30)
-	address = models.CharField(max_length=50)
-	city = models.CharField(max_length=60) 
-	state_province = models.CharField(max_length=30) 
-	country = models.CharField(max_length=50) 
-	website = models.URLField()
-	def __unicode__(self):
-		return self.name
+class Category(models.Model):
+	name=models.CharField(max_length=100)
+	article_num=models.IntegerField(default=0)
 
-class Author(models.Model):
-	first_name = models.CharField(max_length=30) 
-	last_name = models.CharField(max_length=40) 
-	email = models.EmailField(blank=True,verbose_name='e-mail')
 	def __unicode__(self):
-		return u'%s %s' %(self.first_name,self.last_name)
+		return u'%s' %self.name
 
-class Book(models.Model):
-	title = models.CharField(max_length=100) 
-	authors = models.ManyToManyField(Author) 
-	publisher = models.ForeignKey(Publisher) 
-	publication_date = models.DateField()
+class Article(models.Model):
+	category=models.ForeignKey(Category)
+	caption=models.CharField('标题',max_length=200)
+	shortcontent=models.TextField(max_length=500)
+	content=UEditorField('content')
+	createtime=models.DateTimeField(auto_now_add=True)
+	hits=models.IntegerField(default=0)
+	times=models.TimeField(default=0)
+	goods=models.IntegerField(default=0)
+	bads=models.IntegerField(default=0)
 	def __unicode__(self):
-		return self.title
+		return u'%s' %self.caption
+
+class Comment(models.Model):
+	name=models.CharField(max_length=50)
+	email=models.EmailField()
+	content=models.TextField()
+	createtime=models.DateTimeField(auto_now_add=True)
+	article=models.ForeignKey(Article)
+	def __unicode__(self):
+		return u'%s' %self.article

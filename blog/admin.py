@@ -1,20 +1,16 @@
 from django.contrib import admin
-from .models import Publisher,Author,Book
+from .models import Category,Article,Comment
 # Register your models here.
 
-class AuthorAdmin(admin.ModelAdmin):
-	list_display=('first_name','last_name','email')
-	search_fields=('first_name','last_name')
-	list_filter=('email',)
+class CategoryAdmin(admin.ModelAdmin):
+	list_display=('name','article_num')
 
-class BookAdmin(admin.ModelAdmin):
-	list_display=('title','publisher','publication_date')
-	list_filter=('publication_date',)
-	date_hierarchy='publication_date'
-	ordering=('-publication_date',)
-	# fields=('publication_date','Publisher','title')
-	filter_horizontal = ('authors',)
+class ArticleAdmin(admin.ModelAdmin):
+	list_display=('caption','category','createtime','hits','times','goods','bads')
 
-admin.site.register(Book,BookAdmin)
-admin.site.register(Author,AuthorAdmin)
-admin.site.register(Publisher)
+class CommentAdmin(admin.ModelAdmin):
+	list_display=('article','content','createtime','name','email')
+
+admin.site.register(Category,CategoryAdmin)
+admin.site.register(Article,ArticleAdmin)
+admin.site.register(Comment,CommentAdmin)
