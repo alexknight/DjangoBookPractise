@@ -1,3 +1,4 @@
+#-*-coding=utf-8 -*-
 from django.shortcuts import render,render_to_response
 from django.template import loader,Context,RequestContext
 from django.http import HttpResponse,HttpResponseRedirect
@@ -26,4 +27,86 @@ def default(request):
 	categorys=r_sidebar(request)
 	articles=models.Article.objects.order_by('-id')[0:6]
 	return render_to_response('index.html',locals())
+
+def demo(request):
+	return render_to_response('demo.html',)
+
+def article_list(request):
+	categorys=r_sidebar(request)
+	keywords=request.GET.get('keywords')
+	category=request.GET.get('category')
+
+	if keywords:
+		articles=models.Article.objects.order_by('-id').filter(Q(caption__icontains=keywords) | Q(content_icontains=keywords))
+	elif category:
+		articles=models.Article.objects.order_by('-id').filter(category__id=int(category))
+	else:
+		articles=models.Article.objects.order_by('-id')
+
+	paginator=Paginator(articles,20)
+
+	try:
+		page=int(request.GET.get('page',1))
+		if page<1:
+			page=1
+	except ValueError:
+		page=1
+
+	try:
+		articlelist=paginator.page(page)
+	except (EmptyPage,InvalidPage,PageNotAnInteger):
+		articlelist=paginator.page(1)
+	after_range_num = 3
+	before_range_num = 2 
+	if page >= after_range_num:
+		page_range = paginator.page_range[page - after_range_num:page + before_range_num]
+	else:
+		page_range = paginator.page_range[0:page + before_range_num]
+	return render_to_response('article_list.html',locals())
+
+
+def article_detail(request):  
 	
+	categorys = r_sidebar(request)
+     
+    #根据id获取文章信息
+	articleid = int(request.GET.get('article'))
+	article = models.Article.objects.get(id = articleid)
+	
+	#更新浏览次数
+	article.hits += 1
+	
+	#显示评论
+	commentlist = models.Comment.objects.filter(article_id = articleid)
+     
+    #顶和踩
+	if request.POST.has_key('good'):
+		article.goods += 1
+	 
+	if request.POST.has_key('bad'):
+		article.bads += 1
+	 
+	#提交评论
+	if request.POST.has_key('commentsubmit'):
+	
+		formInfo = CommentForm(request.POST)
+		if formInfo.is_valid():
+			submiterror = 0
+			comment = formInfo.cleaned_data
+			models.Comment.objects.create(name=comment['name'], content=comment['content'], article=article, email=comment['email'])
+			article.times += 1
+		else:
+			submiterror = 1
+			
+	article.save()
+	form = CommentForm()
+	return render_to_response('article_detail.html',locals(),context_instance=RequestContext(request))
+
+
+
+
+
+
+
+
+

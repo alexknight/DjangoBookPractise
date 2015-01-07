@@ -11,4 +11,5 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     (r'^base/$', views.r_sidebar),
     (r'^blog/$', views.default),
+    (r'^demo/$', views.demo),
 )
