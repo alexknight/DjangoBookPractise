@@ -16,7 +16,14 @@ def r_sidebar(request):
 
 	for category in categorys:
 		category.article_num=0
-
+		for article in articles:
+			if article.category==category:
+				category.article_num+=1
+		category.save()
+	return categorys
 
 def default(request):
 	categorys=r_sidebar(request):
+	articles=models.Article.objects.order_by('-id')[0:6]
+	return render_to_response('index.html',locals())
+	
